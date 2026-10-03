@@ -1,71 +1,74 @@
 // SE4041 – Mobile Application Design & Development
-// Practical 02 – Exercise 01: Arrays
+// Practical 03 – Exercise 01: Functions
 
-// Step 1 – Create an Array
-var marks = [72, 65, 48, 90, 55]
+// MARK: - Step 1: A Simple Function
+func greet() {
+    print("Welcome to SE4041")
+}
 
-print(marks)
+greet()
 
-// Step 2 – Access Array Elements
-print(marks[0])
-print(marks[2])
-print(marks[4])
+// MARK: - Step 2: Function with a Parameter
+func greetStudent(name: String) {
+    print("Welcome \(name)")
+}
 
-// Step 3 – Useful Array Properties
-print(marks.count)
-print(marks.isEmpty)
-print(marks.first as Any)
-print(marks.last as Any)
+greetStudent(name: "Amal")
+greetStudent(name: "Nimali")
+greetStudent(name: "Ruwan")
 
-// Step 4 – Modify an Array
-marks[2] = 52
+// MARK: - Step 3: Returning a Value
+func grade(for mark: Int) -> String {
+    if mark >= 50 {
+        return "Pass"
+    }
+    return "Fail"
+}
 
-print(marks)
+let result = grade(for: 68)
+print(result)
 
-marks.append(88)
-marks.insert(60, at: 1)
+// MARK: - Activity 1: calculateAverage
+func calculateAverage(_ a: Double, _ b: Double, _ c: Double) -> Double {
+    return (a + b + c) / 3.0
+}
 
-print(marks)
+let averageResult = calculateAverage(75, 82, 68)
+print(averageResult)
 
-marks.removeLast()
-marks.remove(at: 1)
+// MARK: - Step 4: Argument Labels
+func travel(from town: String, to city: String) {
+    print("Travelling from \(town) to \(city)")
+}
 
-print(marks)
+travel(from: "Malabe", to: "Kandy")
 
-// Step 5 – Useful Array Methods
-marks = [72, 65, 48, 90, 55]
+// Removing an Argument Label
+func double(_ number: Int) -> Int {
+    return number * 2
+}
 
-print(marks.max()!)
-print(marks.min()!)
-print(marks.contains(90))
-print(marks.sorted())
-print(marks.sorted(by: >))
+print(double(10))
 
-let total = marks.reduce(0, +)
+// MARK: - Step 5: Default Parameter Values
+func result(_ mark: Int, passMark: Int = 50) -> String {
+    if mark >= passMark {
+        return "Pass"
+    }
+    return "Fail"
+}
 
-print(total)
+print(result(68))
+print(result(68, passMark: 75))
 
-let average = Double(total) / Double(marks.count)
+// MARK: - Activity 2: finalResult
+func finalResult(mark: Int, passMark: Int = 50) -> String {
+    if mark >= passMark {
+        return "Pass"
+    }
+    return "Fail"
+}
 
-print(average)
-
-// Activity 1
-var modules = ["SE4041", "IT2020", "IT2030", "IT2040", "IT2050"]
-
-// 1. Display the entire array
-print(modules)
-
-// 2. Display the first module
-print(modules[0])
-
-// 3. Display the last module
-print(modules[modules.count - 1])
-
-// 4. Add one new module
-modules.append("SE4060")
-
-// 5. Display the number of modules
-print(modules.count)
-
-// 6. Check whether "SE4041" exists in the array
-print(modules.contains("SE4041"))
+print(finalResult(mark: 45))
+print(finalResult(mark: 75))
+print(finalResult(mark: 75, passMark: 80))

@@ -1,131 +1,191 @@
 // SE4041 – Mobile Application Design & Development
-// Practical 02 – Exercise 06: Loops
+// Practical 03 – Exercise 06: Structures, Classes & Value vs Reference Types
 
-// Part A – for-in
-for i in 1...5 {
-    print("Week \(i)")
+// MARK: - Section 14: Structures
+enum Grade: String {
+    case a = "A"
+    case b = "B"
+    case c = "C"
+    case f = "F"
 }
 
-// Loop Through an Array
-let names = ["Amal", "Nimali", "Ruwan"]
+struct Student {
+    // Stored Properties
+    var name: String
+    var mark: Int
+    var registered: Bool = true
 
-for name in names {
-    print(name)
-}
-
-// Using enumerated()
-for (index, name) in names.enumerated() {
-    print("\(index): \(name)")
-}
-
-// Part B – while
-var balance = 1000
-var week = 0
-
-while balance > 0 {
-    balance -= 300
-    week += 1
-}
-
-print("Ran out in week \(week)")
-
-// Part C – repeat-while
-var attempts = 0
-
-repeat {
-    attempts += 1
-    print("Attempt \(attempts)")
-} while attempts < 3
-
-// Section 12 – break and continue
-let marksSample = [72, -1, 65, 48, 90]
-
-for mark in marksSample {
-    if mark < 0 {
-        continue
+    // MARK: - Section 15: Computed Property
+    var grade: Grade {
+        switch mark {
+        case 75...100:
+            return .a
+        case 65..<75:
+            return .b
+        case 50..<65:
+            return .c
+        default:
+            return .f
+        }
     }
 
-    if mark == 90 {
-        break
-    }
-
-    print(mark)
-}
-
-// Activity 6
-let marks = [72, -1, 55, 43, 90, 88]
-
-for mark in marks {
-    if mark < 0 {
-        continue
-    }
-
-    if mark == 90 {
-        break
-    }
-
-    print(mark)
-}
-
-// Section 13 – Putting Collections and Control Flow Together
-let studentNames = ["Amal", "Nimali", "Ruwan", "Sanduni"]
-let studentMarks = [72, 45, 48, 90]
-
-let passMark = 50
-
-var passedStudents: [String] = []
-
-for (index, mark) in studentMarks.enumerated() {
-    if mark >= passMark {
-        passedStudents.append(studentNames[index])
-        print("\(studentNames[index]): \(mark) - Pass")
-    } else {
-        print("\(studentNames[index]): \(mark) - Fail")
+    // MARK: - Section 16: Methods
+    func displayDetails() {
+        print("\(name) received \(mark)")
     }
 }
 
-print("Passed Students: \(passedStudents)")
+// Creating and accessing a struct instance
+let student = Student(
+    name: "Amal",
+    mark: 72
+)
 
-// Section 14 – Knowledge Check
-// 1. What is the main difference between an array and a set?
-//    An array is an ordered collection that allows duplicate values and accesses elements via integer indices.
-//    A set is an unordered collection of unique elements that enforces uniqueness and provides fast membership checking.
+print(student.name)
+print(student.mark)
+print(student.registered)
+
+// Section 15: Testing Computed Property with Rectangle
+struct Rectangle {
+    var width: Double
+    var height: Double
+
+    var area: Double {
+        return width * height
+    }
+}
+
+let rectangle = Rectangle(
+    width: 4,
+    height: 3
+)
+
+print(rectangle.area)
+
+// Testing computed grade on Student
+print(student.name)
+print(student.grade.rawValue)
+
+// Section 16: Calling Methods
+let student2 = Student(
+    name: "Kamal",
+    mark: 75
+)
+
+student2.displayDetails()
+
+// Mutating Methods
+struct Counter {
+    var count = 0
+
+    mutating func increment() {
+        count += 1
+    }
+}
+
+var counter = Counter()
+counter.increment()
+counter.increment()
+print(counter.count)
+
+// MARK: - Section 17: Classes
+class Lecturer {
+    var name: String
+    var module: String
+
+    init(name: String, module: String) {
+        self.name = name
+        self.module = module
+    }
+
+    func introduce() {
+        print("\(name) teaches \(module)")
+    }
+}
+
+let lecturer = Lecturer(
+    name: "Nushkan",
+    module: "SE4041"
+)
+
+lecturer.introduce()
+
+// MARK: - Section 18: Struct vs Class – The Important Difference
+// Struct Example (Value Type - creates independent copies)
+struct Point {
+    var x = 0
+}
+
+var firstPoint = Point()
+var secondPoint = firstPoint
+secondPoint.x = 99
+
+print(firstPoint.x)   // Prints 0
+print(secondPoint.x)  // Prints 99
+
+// Class Example (Reference Type - shares the same instance)
+class CounterClass {
+    var count = 0
+}
+
+let firstCounter = CounterClass()
+let secondCounter = firstCounter
+secondCounter.count = 99
+
+print(firstCounter.count)   // Prints 99
+print(secondCounter.count)  // Prints 99
+
+// MARK: - Section 20: Knowledge Check
+// 1. Why do we use functions?
+//    To avoid repeating code, make code easier to understand, test small parts independently, and reuse logic.
 //
-// 2. Why does an array allow duplicates?
-//    Arrays simply store items sequentially by their position/index, without checking or restricting value uniqueness.
+// 2. What is a function parameter?
+//    A named variable defined in a function's declaration that allows values to be passed into the function.
 //
-// 3. Why does a set ignore duplicate values?
-//    Sets require elements to conform to Hashable and maintain uniqueness using hash values; duplicates are automatically discarded upon insertion.
+// 3. What does -> String mean?
+//    It specifies the return type of the function, indicating that the function returns a value of type String.
 //
-// 4. How do you access an array item?
-//    Using subscript syntax with a zero-based integer index, for example: marks[0].
+// 4. What is an argument label?
+//    The external label used when calling a function, which makes the call site read clearly and naturally.
 //
-// 5. How do you access a dictionary value?
-//    Using subscript syntax with the associated key, for example: marks["Amal"].
+// 5. What is a default parameter value?
+//    A fallback value assigned to a parameter in its definition, making that argument optional when calling the function.
 //
-// 6. Why does dictionary lookup return an optional?
-//    Because the requested key may not exist in the dictionary, so Swift returns nil if the key is not found.
+// 6. What is the purpose of guard?
+//    To perform early validation and exit the scope immediately if a condition is not met, keeping subsequent code clean.
 //
-// 7. What is the difference between ... and ..< ?
-//    The closed range operator (...) includes both the lower and upper bounds (e.g., 1...5 includes 1, 2, 3, 4, 5).
-//    The half-open range operator (..<) includes the lower bound but excludes the upper bound (e.g., 1..<5 includes 1, 2, 3, 4).
+// 7. What is a tuple?
+//    A lightweight compound type that groups multiple values into a single compound value, often used to return multiple values.
 //
-// 8. When should you use if?
-//    When branching execution based on Boolean conditions (true/false) or evaluating sequential conditions.
+// 8. What does filter do?
+//    Iterates over a collection and returns a new collection containing only the elements that satisfy a given predicate closure.
 //
-// 9. When can switch be clearer than if / else if?
-//    When comparing a single expression against multiple distinct values, discrete cases, or numeric ranges.
+// 9. What does map do?
+//    Transforms each element of a collection by applying a closure to it and returns a new collection of transformed elements.
 //
-// 10. What is the difference between for-in and while?
-//     for-in iterates over a defined sequence, range, or collection a predetermined number of times.
-//     while repeats a block of code dynamically as long as its Boolean condition evaluates to true.
+// 10. What does reduce do?
+//     Combines all elements of a collection into a single cumulative value using an initial value and a combining closure.
 //
-// 11. What is the main difference between while and repeat-while?
-//     A while loop checks its condition before executing the loop body (meaning it may run 0 times).
-//     A repeat-while loop executes the body first and evaluates the condition afterward (guaranteed to run at least once).
+// 11. What problem does an enum solve?
+//     It models a fixed set of related choices or states in a type-safe manner, preventing invalid values at compile time.
 //
-// 12. What does continue do?
-//     Skips the remainder of the current loop iteration and immediately moves on to the next iteration.
+// 12. What is a raw value?
+//     A default underlying primitive value (such as Int, String, or Character) assigned to each case in an enum.
 //
-// 13. What does break do?
-//     Immediately stops and exits the loop entirely, transferring execution to the statement following the loop.
+// 13. What is a struct?
+//     A custom value type that groups related properties and methods into a reusable blueprint.
+//
+// 14. What is a stored property?
+//     A constant or variable stored as part of an instance of a struct or class.
+//
+// 15. What is a computed property?
+//     A property that does not store a value directly, but calculates and returns one each time it is accessed.
+//
+// 16. When is mutating required?
+//     On a struct or enum method when the method modifies any of the instance's stored properties.
+//
+// 17. What is a class?
+//     A custom reference type supporting inheritance, custom deinitialization, and shared instances across references.
+//
+// 18. What is the main difference between a struct and a class?
+//     Structs are value types (copied when assigned or passed), whereas classes are reference types (references to shared instances).

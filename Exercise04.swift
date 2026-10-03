@@ -1,40 +1,31 @@
 // SE4041 – Mobile Application Design & Development
-// Practical 02 – Exercise 04: if, else if, and else
+// Practical 03 – Exercise 04: Closures, map, filter, and reduce
 
-// Step 1 – if / else if / else Decision Making
-let mark = 68
+let marks = [72, 45, 65, 48, 90]
 
-if mark >= 75 {
-    print("Distinction")
-} else if mark >= 50 {
-    print("Pass")
-} else {
-    print("Fail")
-}
+// MARK: - filter
+let passed = marks.filter { $0 >= 50 }
+print(passed)
 
-// Activity 4
-let attendance = 78
+// MARK: - map
+let increasedMarks = marks.map { $0 + 5 }
+print(increasedMarks)
 
-if attendance >= 90 {
-    print("Excellent attendance")
-} else if attendance >= 80 {
-    print("Good attendance")
-} else if attendance >= 70 {
-    print("Acceptable attendance")
-} else {
-    print("Low attendance")
-}
+// MARK: - reduce
+let total = marks.reduce(0) { $0 + $1 }
+print(total)
 
-// Testing with different values
-let testValues = [95, 82, 73, 64]
-for testAttendance in testValues {
-    if testAttendance >= 90 {
-        print("Attendance \(testAttendance)%: Excellent attendance")
-    } else if testAttendance >= 80 {
-        print("Attendance \(testAttendance)%: Good attendance")
-    } else if testAttendance >= 70 {
-        print("Attendance \(testAttendance)%: Acceptable attendance")
-    } else {
-        print("Attendance \(testAttendance)%: Low attendance")
-    }
-}
+// MARK: - Activity 5: Product Prices using Closures
+let prices = [120.0, 250.0, 80.0, 500.0, 150.0]
+
+// 1. Prices greater than 100
+let highPrices = prices.filter { $0 > 100 }
+print(highPrices)
+
+// 2. Prices increased by 10
+let updatedPrices = prices.map { $0 + 10 }
+print(updatedPrices)
+
+// 3. Total of all prices
+let totalPrice = prices.reduce(0.0) { $0 + $1 }
+print(totalPrice)

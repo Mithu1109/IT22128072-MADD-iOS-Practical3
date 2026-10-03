@@ -1,48 +1,42 @@
 // SE4041 – Mobile Application Design & Development
-// Practical 02 – Exercise 02: Sets
+// Practical 03 – Exercise 02: guard
 
-// Step 1 – Create a Set
-var towns: Set = ["Malabe", "Kandy", "Galle"]
+// MARK: - Example: guard Statement and Validation
+func register(_ name: String?) {
+    guard let name = name else {
+        print("No name given")
+        return
+    }
 
-print(towns)
+    guard !name.isEmpty else {
+        print("Name cannot be empty")
+        return
+    }
 
-// Step 2 – Insert Values
-towns.insert("Jaffna")
-towns.insert("Kandy")
+    print("Registered \(name)")
+}
 
-print(towns)
-print(towns.count)
+// Testing register function
+register(nil)
+register("")
+register("Kamal")
 
-// Step 3 – Check Membership
-print(towns.contains("Kandy"))
-print(towns.contains("Colombo"))
+// MARK: - Activity 3: checkStudent
+func checkStudent(name: String?, mark: Int?) {
+    guard let name = name else {
+        print("Student name unavailable")
+        return
+    }
 
-// Step 4 – Remove an Item
-towns.remove("Galle")
+    guard let mark = mark else {
+        print("Student mark unavailable")
+        return
+    }
 
-print(towns)
+    print("\(name) received \(mark) marks")
+}
 
-// Step 5 – Set Operations
-let swiftClass: Set = ["Amal", "Nimali", "Ruwan"]
-let kotlinClass: Set = ["Nimali", "Ruwan", "Sanduni"]
-
-print(swiftClass.union(kotlinClass).sorted())
-print(swiftClass.intersection(kotlinClass).sorted())
-print(swiftClass.subtracting(kotlinClass).sorted())
-print(swiftClass.symmetricDifference(kotlinClass).sorted())
-
-// Activity 2
-let mobileDevelopmentStudents: Set = ["Amal", "Nimali", "Ruwan", "Kamal"]
-let gameTechnologyStudents: Set = ["Ruwan", "Kamal", "Sanduni", "Kasun"]
-
-// 1. All students
-print(mobileDevelopmentStudents.union(gameTechnologyStudents).sorted())
-
-// 2. Students taking both modules
-print(mobileDevelopmentStudents.intersection(gameTechnologyStudents).sorted())
-
-// 3. Students taking only Mobile Development
-print(mobileDevelopmentStudents.subtracting(gameTechnologyStudents).sorted())
-
-// 4. Students taking only one of the modules
-print(mobileDevelopmentStudents.symmetricDifference(gameTechnologyStudents).sorted())
+// Testing checkStudent function
+checkStudent(name: nil, mark: 75)
+checkStudent(name: "Kamal", mark: nil)
+checkStudent(name: "Kamal", mark: 75)
